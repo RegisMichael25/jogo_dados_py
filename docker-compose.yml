@@ -1,20 +1,14 @@
 version: '3.8'
 
 services:
-  # O nome do nosso serviço/aplicação
+  
   game:
-    # Diz ao compose para construir a imagem usando o Dockerfile no diretório atual ('.')
+    
     build: .
-    # Um nome amigável para o nosso contêiner quando ele estiver rodando
+    
     container_name: meu_jogo_de_dados
     
-    # A MÁGICA PARA O DESENVOLVIMENTO:
-    # Mapeia a pasta 'src' do seu computador para a pasta '/app' dentro do contêiner.
-    # Resultado: qualquer alteração que você fizer no código na sua máquina
-    # aparece instantaneamente dentro do contêiner, sem precisar reconstruir a imagem!
     volumes:
       - ./src:/app
       
-    # Garante que o terminal fique aberto e interativo,
-    # essencial para um jogo que precisa de input do usuário (ex: "aperte enter para rolar os dados").
     tty: true
