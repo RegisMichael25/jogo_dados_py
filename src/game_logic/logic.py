@@ -8,7 +8,7 @@ lista_de_jogadas = [0, 1, 1, 0, 1]
 def debito(saldo, percentual):
     print("==========================================")
     valor_debito = saldo * (percentual/100)
-    saldo -= valor_debito           
+    saldo -= valor_debito
     return saldo, valor_debito
 
 def credito(saldo, percentual):
@@ -20,7 +20,7 @@ def credito(saldo, percentual):
 for jogadas in lista_de_jogadas:
         if jogadas == 0:
             print(f"saldo antes da aposta: {saldo_aposta:.2f}")
-            saldo_aposta, valor_perdido = debito(saldo_aposta, 30           )
+            saldo_aposta, valor_perdido = debito(saldo_aposta, 30)
             print(f"Você perdeu {valor_perdido:.2f} na aposta! Seu saldo atual é {saldo_aposta:.2f}.")
             print(f"saldo depois da aposta: {saldo_aposta:.2f}")
         else:
