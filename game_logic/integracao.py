@@ -1,4 +1,4 @@
-import sicbo.sicbo as sicbo
+from game_logic import sicbo
 sacavel = 0
 def debito(saldo, percentual):
     print("==========================================")
