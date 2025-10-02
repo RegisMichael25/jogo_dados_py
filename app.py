@@ -4,7 +4,7 @@ import streamlit as st
 import time
 import random
 import openai
-import os # <-- IMPORTADO PARA LER VARIÁVEIS DE AMBIENTE
+import os 
 from game_logic import logic, integracao
 
 api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
@@ -14,7 +14,6 @@ if api_key:
     openai.api_key = api_key
     API_CONFIGURADA = True
 
-# --- NOVA FUNÇÃO: Gerador de Mensagens com IA ---
 def gerar_mensagem_ia(valor_perdido):
     if not API_CONFIGURADA:
         return "Não desista! A próxima rodada pode ser a sua grande vitória."
@@ -39,9 +38,7 @@ def gerar_mensagem_ia(valor_perdido):
     except Exception as e:
         st.error(f"Erro ao chamar a API da OpenAI: {e}")
         return "A sorte está quase virando! Tente mais uma vez."
-# --- O resto do seu código com as modificações ---
 
-# Configuração da Página e Estado do Jogo
 if 'stage' not in st.session_state:
     st.session_state.stage = "inicio"
     st.session_state.saldo = 100.0
@@ -49,7 +46,6 @@ if 'stage' not in st.session_state:
     st.session_state.rodada_atual = 0
     st.session_state.log = []
 
-# Funções da Interface
 def render_header():
     st.title("🎲 Cassino Consciente")
     st.warning("Um simulador para demonstrar algoritmos de cassino online.")
@@ -102,7 +98,6 @@ def estagio_inicial():
         st.session_state.rodada_atual = 0
         st.rerun()
 
-# ... (O resto das funções de estágio 'principal_deposito' e 'principal_jogadas' permanecem as mesmas)
 def estagio_principal_deposito():
     st.subheader("Estágio 2: O Depósito")
     st.info("Após as rodadas iniciais, o sistema incentiva um depósito para continuar.")
@@ -153,14 +148,11 @@ def estagio_principal_jogadas():
             st.session_state.clear()
             st.rerun()
 
-
-# --- Renderização Principal ---
 render_header()
 
 if not API_CONFIGURADA:
     st.error("A chave da API da OpenAI não foi encontrada. As mensagens da IA usarão um texto padrão. Crie o arquivo .streamlit/secrets.toml para habilitar a função.")
 
-# Controle de qual estágio mostrar
 if st.session_state.stage == "inicio":
     estagio_inicial()
 elif st.session_state.stage == "principal_deposito":
@@ -168,7 +160,6 @@ elif st.session_state.stage == "principal_deposito":
 elif st.session_state.stage == "principal_jogadas":
     estagio_principal_jogadas()
 
-# Mostra o log de atividades
 st.markdown("---")
 st.subheader("Log de Atividades")
 for msg in st.session_state.log:
