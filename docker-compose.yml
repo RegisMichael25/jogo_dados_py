@@ -7,9 +7,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8501:8501"
     volumes:
       - .:/app
+    # Injeta a API Key do arquivo .env para dentro do contêiner
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+    # ADICIONADO: Mantém o contêiner rodando de forma interativa
+    stdin_open: true # Mantém o STDIN aberto para entrada de dados (input)
+    tty: true        # Aloca um pseudo-TTY, necessário para interatividade
