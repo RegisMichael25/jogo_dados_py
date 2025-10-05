@@ -1,7 +1,12 @@
 # game_logic/integracao.py
+import os
 from colorama import init, Fore
 init(autoreset=True)
-from game_logic import roleta  # <-- MUDANÇA AQUI
+from game_logic import roleta  
+
+def clear_screen():
+    """Limpa a tela do terminal para uma melhor visualização."""
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def debito(saldo, percentual):
     print("==========================================")
@@ -24,17 +29,17 @@ def rodada_auditada(saldo_atual, percentual, deve_ganhar):
     print("2. Apostar em um Número Específico (0-36)")
     modo = input("Modo: ")
 
-    resultado_real = False  # Inicializa como False
+    resultado_real = False 
 
     if modo == '1':
+        clear_screen()
         print("\nResultado da rodada (pré-definido): ", "Vitória" if deve_ganhar else "Derrota")
         resultado_real = roleta.apostar_cor(deve_ganhar)
     elif modo == '2':
+        clear_screen()
         print("\nResultado da rodada (pré-definido): ", "Vitória" if deve_ganhar else "Derrota")
-        # O pagamento para um número é maior, então ajustamos o crédito
-        # Em uma aposta de número, o pagamento é 35 para 1. Vamos simular um ganho maior.
         if deve_ganhar:
-            percentual *= 1.5 # Multiplica o ganho potencial por 5 para simular um prêmio maior
+            percentual *= 1.5
         resultado_real = roleta.apostar_numero(deve_ganhar)
     else:
         print("Modo inválido! Tente novamente.")

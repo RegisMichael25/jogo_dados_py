@@ -7,14 +7,11 @@ from game_logic import integracao
 from colorama import init, Fore
 init(autoreset=True)
 
-# Carrega as variáveis de ambiente do arquivo .env
 load_dotenv()
 
-# --- Configuração da API OpenAI ---
 API_CONFIGURADA = False
 GEMINI_MODEL = None
 
-# Carrega a chave da API do Gemini do ambiente
 api_key = os.getenv("GEMINI_API_KEY")
 if api_key:
     try:
@@ -25,10 +22,8 @@ if api_key:
         print(f"Erro ao configurar a API do Gemini: {e}")
         API_CONFIGURADA = False
 
-def clear_screen():
-    """Limpa a tela do terminal para uma melhor visualização."""
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+integracao.clear_screen()
+       
 def gerar_mensagem_ia(valor_perdido):
     print("\n🤖 Gerando mensagem da IA...")
     time.sleep(2)
@@ -38,7 +33,6 @@ def gerar_mensagem_ia(valor_perdido):
         return "Não desista! A próxima rodada pode ser a sua grande vitória."
     
     try:
-        # O prompt continua o mesmo, a IA do Gemini o entenderá perfeitamente
         prompt = f"""
         Aja como um assistente de marketing de uma casa de apostas online.
         O usuário acabou de perder R$ {valor_perdido:.2f} em uma rodada.
@@ -46,15 +40,15 @@ def gerar_mensagem_ia(valor_perdido):
         Devolva apenas uma frase e nada mais, sem explicações sem adições ou escolhas, devolva a frase.
         """
         
-        # Gera o conteúdo com o Gemini
         response = GEMINI_MODEL.generate_content(prompt)
-        clear_screen()
+        integracao.clear_screen()
         return response.text.strip()
         
     except Exception as e:
         print(f"\n[Erro na API do Gemini: {e}]")
         return "A sorte está quase virando! Tente mais uma vez."
 
+integracao.clear_screen()
 
 class Jogo:
     """Classe para gerenciar o estado do jogo."""
@@ -72,7 +66,7 @@ class Jogo:
         
 def rodada(jogo, jogadas, porcentagens):
     for i in range(5):
-        clear_screen()
+        integracao.clear_screen()
         jogo.mostrar_status()
         print(f"{Fore.LIGHTBLUE_EX}\n--- RODADA {i + 1} de 5 ---")
         
@@ -81,11 +75,10 @@ def rodada(jogo, jogadas, porcentagens):
         
         saldo_anterior = jogo.saldo
         
-        # Chama a função de rodada auditada que pede a interação do usuário
         saldo_novo, ganho_rodada = integracao.rodada_auditada(jogo.saldo, percentual, deve_ganhar)
         
         jogo.saldo = saldo_novo
-        jogo.sacavel += ganho_rodada # rodada_auditada foi ajustada para retornar o ganho/perda
+        jogo.sacavel += ganho_rodada 
         
         if jogo.saldo < saldo_anterior:
             valor_perdido = saldo_anterior - jogo.saldo
@@ -97,15 +90,14 @@ def rodada(jogo, jogadas, porcentagens):
 
 def rodar_estagio_inicial(jogo):
     """Executa as 5 rodadas pré-programadas do início."""
-    clear_screen()
+    integracao.clear_screen()
     print("ESTÁGIO 1: RODADAS INICIAIS")
     print("O sistema executa 5 rodadas pré-programadas para te analisar.")
     print("As apostas são um percentual do seu saldo atual.")
     input("\nPressione Enter para começar...")
 
-    porcentagens = [30, 3, 5, 50, 10]
-    jogadas = [0, 1, 1, 0, 1]  # 0 = Perde, 1 = Ganha
-
+    porcentagens = [30, 3, 5, 50, 9]
+    jogadas = [0, 1, 1, 0, 1]
     rodada(jogo, jogadas, porcentagens)
 
     print("\n🏁 Estágio 1 Concluído!")
@@ -114,7 +106,7 @@ def rodar_estagio_inicial(jogo):
     
 
 def rodar_estagio_deposito(jogo):
-        clear_screen()
+        integracao.clear_screen()
         
         print("Rodadas iniciais finalizados. Saldo acumulado convertido em saldo de jogo!")
         print("Deposite para continuar jogando.")
@@ -130,7 +122,7 @@ def rodar_estagio_deposito(jogo):
         time.sleep(2)
             
         jogadas = [1, 0, 1, 1, 0]
-        porcentagens = [10, 20, 5, 3, 35]
+        porcentagens = [8, 40, 5, 3, 35]
         rodada(jogo, jogadas, porcentagens)    
 
         print("\n🏁 Estágio 2 Concluído!")
@@ -142,7 +134,7 @@ def rodar_estagio_deposito(jogo):
 def rodar_estagio_principal(jogo):
     """Executa o menu principal do jogo onde o jogador toma decisões."""
     while True:
-        clear_screen()
+        integracao.clear_screen()
         jogo.mostrar_status()
         print("\nO que você deseja fazer?")
         print("1. Continuar Jogando (Rotina de Saída)")
@@ -152,11 +144,11 @@ def rodar_estagio_principal(jogo):
         escolha = input("Escolha uma opção: ")
 
         if escolha == '1':
-            # Adaptação da rotina de saída
+            integracao.clear_screen()
             print("\nIniciando rodada com a 'rotina de saída'...")
             time.sleep(1)
-            jogadas = [0, 1, 0, 1, 0]
-            porcentagens = [8, 5, 14, 9, 21]
+            jogadas = [1, 1, 0, 1, 0]
+            porcentagens = [2, 3, 17, 5, 21]
             
             rodada(jogo, jogadas, porcentagens)
             
@@ -165,11 +157,12 @@ def rodar_estagio_principal(jogo):
             time.sleep(2)
             
         elif escolha == '2':
+            integracao.clear_screen()
             jogo.estagio = "deposito"
             rodar_estagio_deposito(jogo)
             
         elif escolha == '3':
-            clear_screen()
+            integracao.clear_screen()
             print("--- FIM DE JOGO ---")
             print(f"Você solicitou o saque.")
             print(f"Valor sacado: R$ {jogo.sacavel:.2f}")
