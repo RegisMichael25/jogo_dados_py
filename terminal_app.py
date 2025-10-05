@@ -3,7 +3,7 @@ import os
 import time
 import google.generativeai as genai
 from dotenv import load_dotenv
-from game_logic import integracao, logic
+from game_logic import integracao
 from colorama import init, Fore
 init(autoreset=True)
 
@@ -30,6 +30,9 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def gerar_mensagem_ia(valor_perdido):
+    print("\n🤖 Gerando mensagem da IA...")
+    time.sleep(2)
+
     """Gera uma mensagem persuasiva da IA quando o jogador perde."""
     if not API_CONFIGURADA or not GEMINI_MODEL:
         return "Não desista! A próxima rodada pode ser a sua grande vitória."
@@ -44,7 +47,6 @@ def gerar_mensagem_ia(valor_perdido):
         """
         
         # Gera o conteúdo com o Gemini
-        print("\n🤖 Gerando mensagem da IA...")
         response = GEMINI_MODEL.generate_content(prompt)
         clear_screen()
         return response.text.strip()
