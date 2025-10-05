@@ -1,18 +1,24 @@
-# 1. Escolha uma imagem base oficial do Python. A versão "slim" é mais leve.
-FROM python:3.11-slim
+# Dockerfile
 
-# 2. Defina o diretório de trabalho dentro do contêiner.
+# Usa uma versão segura e recente do Python
+FROM python:3.11-slim-bookworm
+
+# Cria um usuário não-root para segurança
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# Define o diretório de trabalho e copia os arquivos de dependência
 WORKDIR /app
-
-# 3. Copie o arquivo de dependências para dentro do contêiner.
 COPY requirements.txt .
 
-# 4. Instale as dependências. Usar --no-cache-dir deixa a imagem menor.
+# Instala as dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copie o código-fonte do seu projeto (a pasta 'src') para o diretório de trabalho no contêiner.
-COPY ./src .
+# Copia o restante do código e muda a propriedade para o novo usuário
+COPY . .
+RUN chown -R appuser:appuser /app
 
-# 6. Comando que será executado quando o contêiner iniciar.
-# Ele vai rodar o arquivo principal do seu jogo.
-CMD ["python", "main.py"]
+# Muda para o usuário não-root
+USER appuser
+
+# Comando ATUALIZADO para rodar a aplicação em modo "unbuffered"
+CMD ["python", "-u", "terminal_app.py"]

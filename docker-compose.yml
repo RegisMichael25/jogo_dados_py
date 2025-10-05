@@ -1,20 +1,17 @@
+# docker-compose.yml
+
 version: '3.8'
 
 services:
-  # O nome do nosso serviço/aplicação
-  game:
-    # Diz ao compose para construir a imagem usando o Dockerfile no diretório atual ('.')
-    build: .
-    # Um nome amigável para o nosso contêiner quando ele estiver rodando
-    container_name: meu_jogo_de_dados
-    
-    # A MÁGICA PARA O DESENVOLVIMENTO:
-    # Mapeia a pasta 'src' do seu computador para a pasta '/app' dentro do contêiner.
-    # Resultado: qualquer alteração que você fizer no código na sua máquina
-    # aparece instantaneamente dentro do contêiner, sem precisar reconstruir a imagem!
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./src:/app
-      
-    # Garante que o terminal fique aberto e interativo,
-    # essencial para um jogo que precisa de input do usuário (ex: "aperte enter para rolar os dados").
-    tty: true
+      - .:/app
+    # Injeta a API Key do arquivo .env para dentro do contêiner
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    # ADICIONADO: Mantém o contêiner rodando de forma interativa
+    stdin_open: true # Mantém o STDIN aberto para entrada de dados (input)
+    tty: true        # Aloca um pseudo-TTY, necessário para interatividade

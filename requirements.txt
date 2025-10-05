@@ -1,3 +1,7 @@
-# Coloque aqui as bibliotecas Python que seu projeto vai usar.
 # Arquivo de dependências do Python
+#source venv/bin/activate
+
 pandas==2.2.2
+google-generativeai==0.7.1
+python-dotenv==1.0.1
+colorama
