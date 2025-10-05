@@ -44,6 +44,7 @@ def gerar_mensagem_ia(valor_perdido):
         """
         
         # Gera o conteúdo com o Gemini
+        print("\n🤖 Gerando mensagem da IA...")
         response = GEMINI_MODEL.generate_content(prompt)
         clear_screen()
         return response.text.strip()
@@ -104,30 +105,7 @@ def rodar_estagio_inicial(jogo):
     jogadas = [0, 1, 1, 0, 1]  # 0 = Perde, 1 = Ganha
 
     rodada(jogo, jogadas, porcentagens)
-    """
-    for i in range(5):
-        clear_screen()
-        jogo.mostrar_status()
-        print(f"\n--- RODADA {i + 1} de 5 ---")
-        
-        deve_ganhar = jogadas[i] == 1
-        percentual = porcentagens[i]
-        
-        saldo_anterior = jogo.saldo
-        
-        # Chama a função de rodada auditada que pede a interação do usuário
-        saldo_novo, ganho_rodada = integracao.rodada_auditada(jogo.saldo, percentual, deve_ganhar)
-        
-        jogo.saldo = saldo_novo
-        jogo.sacavel += ganho_rodada # rodada_auditada foi ajustada para retornar o ganho/perda
-        
-        if jogo.saldo < saldo_anterior:
-            valor_perdido = saldo_anterior - jogo.saldo
-            mensagem = gerar_mensagem_ia(valor_perdido)
-            print("\n🤖 Uma mensagem para você:", mensagem)
-        
-        input("\nPressione Enter para a próxima rodada...")
-    """
+
     print("\n🏁 Estágio 1 Concluído!")
     jogo.estagio = "deposito"
     time.sleep(2)
@@ -152,29 +130,6 @@ def rodar_estagio_deposito(jogo):
         jogadas = [1, 0, 1, 1, 0]
         porcentagens = [10, 20, 5, 3, 35]
         rodada(jogo, jogadas, porcentagens)    
-        """
-        for i in range(5):
-            clear_screen()
-            jogo.mostrar_status()
-            print(f"\n--- RODADA {i +1}/5 ---")
-            
-            deve_ganhar = jogadas[i] == 1
-            percentual = porcentagens[i]
-
-            saldo_anterior = jogo.saldo
-            
-            saldo_novo, ganho_rodada = integracao.rodada_auditada(jogo.saldo, percentual, deve_ganhar)
-            
-            jogo.saldo = saldo_novo
-            jogo.sacavel += ganho_rodada
-            
-            if jogo.saldo < saldo_anterior:
-                valor_perdido = saldo_anterior - jogo.saldo
-                mensagem = gerar_mensagem_ia(valor_perdido)
-                print("\n🤖 Uma mensagem para você:", mensagem)
-            
-            input("\nPressione Enter para a próxima rodada...")
-            """
 
         print("\n🏁 Estágio 2 Concluído!")
         time.sleep(2)
