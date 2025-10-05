@@ -88,8 +88,32 @@ def rodar_estagio_inicial(jogo):
         input("\nPressione Enter para a próxima rodada...")
 
     print("\n🏁 Estágio 1 Concluído!")
-    jogo.estagio = "principal"
+    jogo.estagio = "deposito"
     time.sleep(2)
+
+def rodar_estagio_deposito(jogo):
+    while True:
+        clear_screen()
+        print("Rodadas iniciais finalizados. Saldo acumulado convertido em saldo de jogo!")
+        print("Deposite para continuar jogando. ")
+        try:
+            valor_deposito = float(input("Digite o valor a ser depositado: "))
+            if valor_deposito > 0:
+                jogo.saldo += valor_deposito
+                print(f"Depósito de R$ {valor_deposito:.2f} realizado com sucesso!")
+                clear_screen()
+                jogo.mostrar_status()
+                jogo.saldo, jogo.sacavel = logic.rotina_principal(jogo.saldo)
+                input("\nRodada finalizada. Pressione Enter para continuar...")
+                
+                break
+            else:
+                print("O valor do depósito deve ser positivo.")
+        except ValueError:
+            print("Entrada inválida. Por favor, digite um número.")
+        time.sleep(2)
+        
+    jogo.estagio = "principal"
 
 
 def rodar_estagio_principal(jogo):
@@ -142,6 +166,9 @@ def main():
     
     if jogo.estagio == "inicio":
         rodar_estagio_inicial(jogo)
+        
+    if jogo.estagio == "deposito":
+        rodar_estagio_deposito(jogo)
     
     if jogo.estagio == "principal":
         rodar_estagio_principal(jogo)

@@ -11,7 +11,6 @@ def debito(saldo, percentual):
 def credito(saldo, percentual):
     print("==========================================")
     valor_credito = saldo * (percentual / 100)
-    saldo += valor_credito
     return saldo, valor_credito
 
 def rodada_auditada(saldo_atual, percentual, deve_ganhar):
@@ -33,7 +32,7 @@ def rodada_auditada(saldo_atual, percentual, deve_ganhar):
         # O pagamento para um número é maior, então ajustamos o crédito
         # Em uma aposta de número, o pagamento é 35 para 1. Vamos simular um ganho maior.
         if deve_ganhar:
-            percentual *= 5 # Multiplica o ganho potencial por 5 para simular um prêmio maior
+            percentual *= 1.5 # Multiplica o ganho potencial por 5 para simular um prêmio maior
         resultado_real = roleta.apostar_numero(deve_ganhar)
     else:
         print("Modo inválido! Tente novamente.")
@@ -46,7 +45,6 @@ def rodada_auditada(saldo_atual, percentual, deve_ganhar):
         print(f"\nVocê GANHOU R$ {valor_credito:.2f}")
     else:
         saldo_atual, valor_debito = debito(saldo_atual, percentual)
-        ganho_ou_perda_rodada = -valor_debito
         print(f"\nVocê PERDEU R$ {valor_debito:.2f}")
 
     print(f"Saldo Atual: R$ {saldo_atual:.2f}")

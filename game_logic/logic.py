@@ -20,42 +20,39 @@ def rotina_inicial(saldo_aposta):
     return saldo_aposta, sacavel
 
 
-def rotina_principal(saldo_aposta, valor_sacavel):
+def rotina_principal(saldo_aposta):
     lista_de_jogadas = [1, 0, 1, 1, 0]
-    porcentagens_especificas = [10, 16, 5, 3, 20]
+    porcentagens_especificas = [10, 16, 5, 3, 35]
     
-    for i, jogadas in enumerate(lista_de_jogadas):
-        rodada = i + 1
+    for rodada in range(5):
+        deve_ganhar = lista_de_jogadas[rodada] == 1
+        percentual = porcentagens_especificas[rodada]
         
-        if jogadas == 0:
-            print(f"saldo atual: {saldo_aposta:.2f}")
-            saldo_aposta, valor_perdido = debito(saldo_aposta, porcentagens_especificas[i])
-            print(f"Você perdeu {valor_perdido:.2f} na aposta! Seu saldo atual é {saldo_aposta:.2f}.")
-        else:
-            print(f"saldo atual: {saldo_aposta:.2f}")
-            saldo_aposta, valor_ganho = credito(saldo_aposta, porcentagens_especificas[i])
-            valor_sacavel += valor_ganho
-            print(f"Você ganhou {valor_ganho:.2f} na aposta! Seu saldo atual é {saldo_aposta:.2f}.")
-    return saldo_aposta, valor_sacavel
+        print(f"\n--- RODADA {rodada +1}/5 ---")
+        saldo_aposta, sacavel = integracao.rodada_auditada(saldo_aposta, 
+                                                                 percentual, 
+                                                                 deve_ganhar)
+        
+    print(f"\n✓ Estágio 1 concluído! Saldo final: R$ {saldo_aposta:.2f}")
+    return saldo_aposta, sacavel
 
 
-def rotina_saida(saldo_aposta, valor_sacavel):
+def rotina_saida(saldo_aposta):
     lista_de_jogadas = [0, 1, 0, 1, 0]
     porcentagens_especificas = [2, 2, 10, 4, 11]
     
-    for i, jogadas in enumerate(lista_de_jogadas):
-        rodada = i + 1
+    for rodada in range(5):
+        deve_ganhar = lista_de_jogadas[rodada] == 1
+        percentual = porcentagens_especificas[rodada]
         
-        if jogadas == 0:
-            print(f"saldo atual: {saldo_aposta:.2f}")
-            saldo_aposta, valor_perdido = debito(saldo_aposta, porcentagens_especificas[i])
-            print(f"Você perdeu {valor_perdido:.2f} na aposta! Seu saldo atual é {saldo_aposta:.2f}.")
-        else:
-            print(f"saldo atual: {saldo_aposta:.2f}")
-            saldo_aposta, valor_ganho = credito(saldo_aposta, porcentagens_especificas[i])
-            valor_sacavel += valor_ganho
-            print(f"Você ganhou {valor_ganho:.2f} na aposta! Seu saldo atual é {saldo_aposta:.2f}.")
-    return saldo_aposta, valor_sacavel
+        print(f"\n--- RODADA {rodada +1}/5 ---")
+        saldo_aposta, sacavel = integracao.rodada_auditada(saldo_aposta, 
+                                                                 percentual, 
+                                                                 deve_ganhar)
+        
+    print(f"\n✓ Estágio 1 concluído! Saldo final: R$ {saldo_aposta:.2f}")
+    return saldo_aposta, sacavel
+
 
 
 def menu_estagio3(saldo_aposta, sacavel):
