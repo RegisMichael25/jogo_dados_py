@@ -1,5 +1,6 @@
 # game_logic/integracao.py
-
+from colorama import init, Fore
+init(autoreset=True)
 from game_logic import roleta  # <-- MUDANÇA AQUI
 
 def debito(saldo, percentual):
@@ -14,11 +15,11 @@ def credito(saldo, percentual):
     return saldo, valor_credito
 
 def rodada_auditada(saldo_atual, percentual, deve_ganhar):
-    print(f"\nSaldo disponível: R$ {saldo_atual:.2f}")
+    print(f"\n{Fore.GREEN}Saldo disponível: R$ {saldo_atual:.2f}")
 
     # --- MENU ATUALIZADO PARA ROLETA ---
     print("Faça sua aposta na roleta:")
-    print("1. Apostar na Cor (Vermelho/Preto)")
+    print(f"1. Apostar na Cor ({Fore.RED}Vermelho{Fore.WHITE}/{Fore.BLACK}Preto{Fore.WHITE})")
     print("2. Apostar em um Número Específico (0-36)")
     modo = input("Modo: ")
 
@@ -42,11 +43,11 @@ def rodada_auditada(saldo_atual, percentual, deve_ganhar):
     if resultado_real:
         saldo_atual, valor_credito = credito(saldo_atual, percentual)
         ganho_ou_perda_rodada = valor_credito
-        print(f"\nVocê GANHOU R$ {valor_credito:.2f}")
+        print(f"\n{Fore.GREEN}Você GANHOU R$ {valor_credito:.2f}")
     else:
         saldo_atual, valor_debito = debito(saldo_atual, percentual)
-        print(f"\nVocê PERDEU R$ {valor_debito:.2f}")
+        print(f"\n{Fore.RED}Você PERDEU R$ {valor_debito:.2f}")
 
-    print(f"Saldo Atual: R$ {saldo_atual:.2f}")
+    print(f"{Fore.LIGHTBLACK_EX}Saldo Atual: R$ {saldo_atual:.2f}")
 
     return saldo_atual, ganho_ou_perda_rodada
