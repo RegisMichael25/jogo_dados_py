@@ -11,6 +11,7 @@ def debito(saldo, percentual):
 def credito(saldo, percentual):
     print("==========================================")
     valor_credito = saldo * (percentual / 100)
+    saldo +=valor_credito
     return saldo, valor_credito
 
 def rodada_auditada(saldo_atual, percentual, deve_ganhar):

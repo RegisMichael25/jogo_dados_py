@@ -33,13 +33,13 @@ def rotina_principal(saldo_aposta):
                                                                  percentual, 
                                                                  deve_ganhar)
         
-    print(f"\n✓ Estágio 1 concluído! Saldo final: R$ {saldo_aposta:.2f}")
+    print(f"\n✓ Estágio 2 concluído! Saldo final: R$ {saldo_aposta:.2f}")
     return saldo_aposta, sacavel
 
 
 def rotina_saida(saldo_aposta):
     lista_de_jogadas = [0, 1, 0, 1, 0]
-    porcentagens_especificas = [2, 2, 10, 4, 11]
+    porcentagens_especificas = [4, 5, 10, 7, 11]
     
     for rodada in range(5):
         deve_ganhar = lista_de_jogadas[rodada] == 1
@@ -50,7 +50,7 @@ def rotina_saida(saldo_aposta):
                                                                  percentual, 
                                                                  deve_ganhar)
         
-    print(f"\n✓ Estágio 1 concluído! Saldo final: R$ {saldo_aposta:.2f}")
+    print(f"\n✓ Estágio 3 concluído! Saldo final: R$ {saldo_aposta:.2f}")
     return saldo_aposta, sacavel
 
 
