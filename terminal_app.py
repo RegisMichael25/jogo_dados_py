@@ -4,6 +4,8 @@ import time
 import google.generativeai as genai
 from dotenv import load_dotenv
 from game_logic import integracao, logic
+from colorama import init, Fore
+init(autoreset=True)
 
 # Carrega as variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -61,15 +63,15 @@ class Jogo:
     def mostrar_status(self):
         """Exibe o status atual do jogador."""
         print("==========================================")
-        print(f"SALDO DE APOSTA: R$ {self.saldo:.2f}")
-        print(f"SALDO SACÁVEL:   R$ {self.sacavel:.2f}")
+        print(f"{Fore.YELLOW}SALDO DE APOSTA: R$ {self.saldo:.2f}")
+        print(f"{Fore.BLACK}SALDO SACÁVEL:   R$ {self.sacavel:.2f}")
         print("==========================================")
         
 def rodada(jogo, jogadas, porcentagens):
     for i in range(5):
         clear_screen()
         jogo.mostrar_status()
-        print(f"\n--- RODADA {i + 1} de 5 ---")
+        print(f"{Fore.LIGHTBLUE_EX}\n--- RODADA {i + 1} de 5 ---")
         
         deve_ganhar = jogadas[i] == 1
         percentual = porcentagens[i]
