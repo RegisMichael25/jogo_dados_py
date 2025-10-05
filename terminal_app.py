@@ -1,7 +1,7 @@
 # terminal_app.py
 import os
 import time
-import openai
+import google.generativeai as genai
 from dotenv import load_dotenv
 from game_logic import integracao, logic
 
@@ -10,10 +10,18 @@ load_dotenv()
 
 # --- Configuração da API OpenAI ---
 API_CONFIGURADA = False
-api_key = os.getenv("OPENAI_API_KEY")
+GEMINI_MODEL = None
+
+# Carrega a chave da API do Gemini do ambiente
+api_key = os.getenv("GEMINI_API_KEY")
 if api_key:
-    openai.api_key = api_key
-    API_CONFIGURADA = True
+    try:
+        genai.configure(api_key=api_key)
+        GEMINI_MODEL = genai.GenerativeModel('models/gemini-2.5-pro')
+        API_CONFIGURADA = True
+    except Exception as e:
+        print(f"Erro ao configurar a API do Gemini: {e}")
+        API_CONFIGURADA = False
 
 def clear_screen():
     """Limpa a tela do terminal para uma melhor visualização."""
@@ -21,23 +29,27 @@ def clear_screen():
 
 def gerar_mensagem_ia(valor_perdido):
     """Gera uma mensagem persuasiva da IA quando o jogador perde."""
-    if not API_CONFIGURADA:
+    if not API_CONFIGURADA or not GEMINI_MODEL:
         return "Não desista! A próxima rodada pode ser a sua grande vitória."
+    
     try:
+        # O prompt continua o mesmo, a IA do Gemini o entenderá perfeitamente
         prompt = f"""
         Aja como um assistente de marketing de uma casa de apostas online.
         O usuário acabou de perder R$ {valor_perdido:.2f} em uma rodada.
-        Crie uma mensagem curta (1 ou 2 frases), otimista e persuasiva para encorajá-lo a continuar jogando.
+        Crie uma mensagem curta, otimista e persuasiva para encorajá-lo a continuar jogando.
+        Devolva apenas uma frase e nada mais, sem explicações sem adições ou escolhas, devolva a frase.
         """
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.8,
-            max_tokens=50
-        )
-        return response.choices[0].message.content.strip()
-    except Exception:
+        
+        # Gera o conteúdo com o Gemini
+        response = GEMINI_MODEL.generate_content(prompt)
+        clear_screen()
+        return response.text.strip()
+        
+    except Exception as e:
+        print(f"\n[Erro na API do Gemini: {e}]")
         return "A sorte está quase virando! Tente mais uma vez."
+
 
 class Jogo:
     """Classe para gerenciar o estado do jogo."""
