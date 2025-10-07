@@ -34,18 +34,15 @@ def apostar_cor(deve_ganhar):
         else:
             print("Escolha inválida. Por favor, digite 'vermelho' ou 'preto'.")
 
-    # Lógica de manipulação do resultado
     numero_final, cor_final = 0, ''
 
     if deve_ganhar:
-        # Força uma vitória, garantindo que a cor sorteada seja a da aposta
         while True:
             num, cor = spin_wheel()
             if cor == aposta_cor:
                 numero_final, cor_final = num, cor
                 break
     else:
-        # Força uma derrota, garantindo que a cor sorteada NÃO seja a da aposta
         while True:
             num, cor = spin_wheel()
             if cor != aposta_cor:
@@ -69,16 +66,13 @@ def apostar_numero(deve_ganhar):
         except ValueError:
             print("Entrada inválida. Por favor, digite um número.")
 
-    # Lógica de manipulação do resultado
     if deve_ganhar:
-        # Força uma vitória, o resultado é o número apostado
         numero_final = aposta_numero
         cor_final = ROULETTE_POCKETS[numero_final]
         print("\nA roleta está girando...")
         time.sleep(1.5)
         print(f"Resultado manipulado! A bola caiu no... {numero_final} ({cor_final.upper()})!")
     else:
-        # Força uma derrota, garantindo que o número sorteado seja diferente
         while True:
             num, cor = spin_wheel()
             if num != aposta_numero:
