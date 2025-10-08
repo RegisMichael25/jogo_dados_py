@@ -245,4 +245,11 @@ Este simulador evidencia como tecnologias modernas (IA, algoritmos adaptativos, 
 
 ---
 
+## Desenvolvedores
+- Gabriel Luis 
+- Luis Miguel 
+- Pedro Victor
+- Regis Michael
+
+---
 **Desenvolvido para fins educacionais e de conscientização sobre os riscos das apostas online e técnicas de manipulação digital.**
