@@ -3,7 +3,6 @@ from game_logic import integracao
 from game_logic.rodadas import alg_rodada
 
 def rodar_estagio_inicial(jogo):
-    """Executa as 5 rodadas pré-programadas do início."""
     integracao.clear_screen()
     print("ESTÁGIO 1: RODADAS INICIAIS")
     print("O sistema executa 5 rodadas pré-programadas para te analisar.")

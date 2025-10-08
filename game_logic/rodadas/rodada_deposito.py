@@ -1,3 +1,6 @@
+import time
+from game_logic import integracao
+from game_logic.rodadas.alg_rodada import rodada
 def rodar_estagio_deposito(jogo):
         integracao.clear_screen()
         

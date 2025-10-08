@@ -23,7 +23,6 @@ def credito(saldo, percentual):
 def rodada_auditada(saldo_atual, percentual, deve_ganhar):
     print(f"\n{Fore.GREEN}Saldo disponível: R$ {saldo_atual:.2f}")
 
-    # --- MENU ATUALIZADO PARA ROLETA ---
     print("Faça sua aposta na roleta:")
     print(f"1. Apostar na Cor ({Fore.RED}Vermelho{Fore.WHITE}/{Fore.BLACK}Preto{Fore.WHITE})")
     print("2. Apostar em um Número Específico (0-36)")

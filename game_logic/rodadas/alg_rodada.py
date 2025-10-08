@@ -25,4 +25,4 @@ def rodada(jogo, jogadas, porcentagens):
             mensagem = Gemini.gerar_mensagem_ia(valor_perdido)
             print("\n🤖 Uma mensagem para você:", mensagem)
         
-        input("\nPressione Enter para a próxima rodada...")
+        input("\nPressione Enter para a próxima rodada...") 

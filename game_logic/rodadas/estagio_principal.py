@@ -1,6 +1,9 @@
+import time
+from game_logic import integracao
+from game_logic.rodadas.alg_rodada import rodada
+import game_logic.rodadas.rodada_deposito as rodada_deposito
 
 def rodar_estagio_principal(jogo):
-    """Executa o menu principal do jogo onde o jogador toma decisões."""
     while True:
         integracao.clear_screen()
         jogo.mostrar_status()
@@ -27,7 +30,7 @@ def rodar_estagio_principal(jogo):
         elif escolha == '2':
             integracao.clear_screen()
             jogo.estagio = "deposito"
-            rodar_estagio_deposito(jogo)
+            rodada_deposito.rodar_estagio_deposito(jogo)
             
         elif escolha == '3':
             integracao.clear_screen()
