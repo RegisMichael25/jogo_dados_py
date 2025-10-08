@@ -15,10 +15,15 @@ def rodada(jogo, jogadas, porcentagens):
         
         saldo_anterior = jogo.saldo
         
-        saldo_novo, ganho_rodada = integracao.rodada_auditada(jogo.saldo, percentual, deve_ganhar)
+        saldo_novo, ganho_rodada = integracao.rodada_auditada(jogo.saldo,
+                                                              jogo.ultimo_deposito,
+                                                              percentual, 
+                                                              deve_ganhar)
         
         jogo.saldo = saldo_novo
-        jogo.sacavel += ganho_rodada
+
+        if ganho_rodada > 0:
+            jogo.sacavel += ganho_rodada
         
         if jogo.saldo < saldo_anterior:
             valor_perdido = saldo_anterior - jogo.saldo

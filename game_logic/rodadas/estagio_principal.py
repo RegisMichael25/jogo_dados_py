@@ -18,8 +18,8 @@ def rodar_estagio_principal(jogo):
             integracao.clear_screen()
             print("\nIniciando rodada com a 'rotina de saída'...")
             time.sleep(1)
-            jogadas = [1, 1, 0, 1, 0]
-            porcentagens = [2, 3, 17, 5, 21]
+            jogadas = [0, 1, 0, 1, 0]
+            porcentagens = [8, 3, 17, 5, 21]
             
             rodada(jogo, jogadas, porcentagens)
             

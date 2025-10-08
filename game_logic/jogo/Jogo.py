@@ -6,7 +6,14 @@ class Jogo:
         self.saldo = saldo_inicial
         self.sacavel = 0.0
         self.estagio = "inicio"
-
+        self.ultimo_deposito = 0
+        self.deposito_total = 0
+        
+    def registrar_deposito(self, valor):
+        self.ultimo_deposito = valor
+        self.deposito_total+= valor
+        self.saldo += valor
+    
     def mostrar_status(self):
         """Exibe o status atual do jogador."""
         print("==========================================")

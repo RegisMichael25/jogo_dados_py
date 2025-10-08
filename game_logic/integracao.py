@@ -11,16 +11,19 @@ def clear_screen():
 def debito(saldo, percentual):
     print("==========================================")
     valor_debito = saldo * (percentual / 100)
+    valor_debito = min(valor_debito, saldo)
     saldo -= valor_debito
     return saldo, valor_debito
 
-def credito(saldo, percentual):
+def credito(saldo,valor_depositado, percentual):
     print("==========================================")
+    
     valor_credito = saldo * (percentual / 100)
+    sacavel = valor_depositado * (percentual / 100)
     saldo +=valor_credito
-    return saldo, valor_credito
+    return saldo, valor_credito, sacavel
 
-def rodada_auditada(saldo_atual, percentual, deve_ganhar):
+def rodada_auditada(saldo_atual, valor_deposito, percentual, deve_ganhar):
     print(f"\n{Fore.GREEN}Saldo disponível: R$ {saldo_atual:.2f}")
 
     print("Faça sua aposta na roleta:")
@@ -38,7 +41,7 @@ def rodada_auditada(saldo_atual, percentual, deve_ganhar):
         clear_screen()
         print("\nResultado da rodada (pré-definido): ", "Vitória" if deve_ganhar else "Derrota")
         if deve_ganhar:
-            percentual *= 1.5
+            percentual = min(percentual *1.5, 30)
         resultado_real = roleta.apostar_numero(deve_ganhar)
     else:
         print("Modo inválido! Tente novamente.")
@@ -46,8 +49,8 @@ def rodada_auditada(saldo_atual, percentual, deve_ganhar):
 
     ganho_ou_perda_rodada = 0
     if resultado_real:
-        saldo_atual, valor_credito = credito(saldo_atual, percentual)
-        ganho_ou_perda_rodada = valor_credito
+        saldo_atual, valor_credito, sacavel = credito(saldo_atual,valor_deposito, percentual)
+        ganho_ou_perda_rodada = sacavel
         print(f"\n{Fore.GREEN}Você GANHOU R$ {valor_credito:.2f}")
     else:
         saldo_atual, valor_debito = debito(saldo_atual, percentual)
